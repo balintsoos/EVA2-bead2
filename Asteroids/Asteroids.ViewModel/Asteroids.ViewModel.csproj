@@ -41,8 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsteroidsViewModel.cs" />
-    <Compile Include="NewGameCommand.cs" />
-    <Compile Include="PauseResumeCommand.cs" />
+    <Compile Include="DelegateCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

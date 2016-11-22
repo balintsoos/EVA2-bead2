@@ -6,8 +6,13 @@
         xmlns:local="clr-namespace:Asteroids"
         mc:Ignorable="d"
         Title="Asteroids" Height="350" Width="525">
+    <Window.InputBindings>
+        <KeyBinding Key="Left" Command="{Binding TurnCommand}" CommandParameter="left" />
+        <KeyBinding Key="Right" Command="{Binding TurnCommand}" CommandParameter="right" />
+    </Window.InputBindings>
     <Grid>
-        <Button Name="_NewGameButton" Content="New Game" Command="{Binding NewGame}" />
-        <Button Name="_PauseResumeButton" Content="{Binding PauseResumeLabel}" Command="{Binding PauseResumeGame}" />
+        <Button Name="_NewGameButton" Content="New Game" Command="{Binding NewGameCommand}" />
+        <Button Name="_PauseResumeButton" Content="{Binding PauseResumeLabel}" Command="{Binding PauseResumeCommand}" />
+        <TextBox x:Name="_GameTime" Height="42" VerticalAlignment="Top" FontSize="28" Text="{Binding TimerLabel, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" />
     </Grid>
 </Window>

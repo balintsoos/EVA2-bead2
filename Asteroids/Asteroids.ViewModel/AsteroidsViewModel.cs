@@ -2,13 +2,23 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace Asteroids.ViewModel
 {
     public class AsteroidsViewModel : INotifyPropertyChanged
     {
-        public NewGameCommand NewGame { get; private set; }
-        public PauseResumeCommand PauseResumeGame { get; private set; }
+        #region Private fields
+
+        private AsteroidsModel _model;
+        private String _timer;
+
+        #endregion
+
+        public DelegateCommand NewGameCommand { get; private set; }
+        public DelegateCommand PauseResumeCommand { get; private set; }
+        public DelegateCommand TurnCommand { get; private set; }
 
         public String PauseResumeLabel
         {
@@ -24,12 +34,16 @@ namespace Asteroids.ViewModel
                 }
             }
         }
-        
-        #region Private fields
 
-        private AsteroidsModel _model;
-
-        #endregion
+        public String TimerLabel
+        {
+            get { return _timer; }
+            set
+            {
+                _timer = "Time: " + value;
+                OnPropertyChanged();
+            }
+        }
 
         #region Constructor
 
@@ -40,8 +54,11 @@ namespace Asteroids.ViewModel
             _model.TimePassed += new EventHandler<int>(Model_TimePassed);
             _model.GameOver += new EventHandler<int>(Model_GameOver);
 
-            NewGame = new NewGameCommand(this);
-            PauseResumeGame = new PauseResumeCommand(this);
+            NewGameCommand = new DelegateCommand(param => StartNewGame());
+            PauseResumeCommand = new DelegateCommand(param => PauseResume());
+            TurnCommand = new DelegateCommand(param => Turn(param.ToString()));
+
+            TimerLabel = "0";
         }
 
         #endregion
@@ -55,15 +72,15 @@ namespace Asteroids.ViewModel
 
         private void Model_TimePassed(object sender, int time)
         {
-            RefreshTime(time);
+            TimerLabel = time.ToString();
         }
 
         private void Model_GameOver(object sender, int time)
         {
-            string header = "Game Over";
-            string text = "You lived for " + time.ToString() + " seconds";
+            // string header = "Game Over";
+            // string text = "You lived for " + time.ToString() + " seconds";
             // MessageBox.Show(text, header, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            StartNewGame();
+            // StartNewGame();
         }
 
         #endregion
@@ -75,12 +92,41 @@ namespace Asteroids.ViewModel
 
         }
 
-        private void RefreshTime(int time)
+        private void StartNewGame()
         {
+            _model.NewGame();
 
+            TimerLabel = "0";
         }
 
-        private void OnPropertyChanged(String property)
+        private void PauseResume()
+        {
+            if (_model.Paused)
+            {
+                _model.Resume();
+            }
+            else
+            {
+                _model.Pause();
+            }
+
+            OnPropertyChanged();
+        }
+
+        private void Turn(String direction)
+        {
+            switch (direction)
+            {
+                case "left":
+                    _model.TurnLeft();
+                    break;
+                case "right":
+                    _model.TurnRight();
+                    break;
+            }
+        }
+
+        private void OnPropertyChanged([CallerMemberName] String property = null)
         {
             if (PropertyChanged != null)
             {
@@ -93,29 +139,6 @@ namespace Asteroids.ViewModel
         #region Public Events
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region Public Methods
-
-        public void StartNewGame()
-        {
-            _model.NewGame();
-
-            RefreshTime(0);
-        }
-
-        public void PauseResume()
-        {
-            if (_model.Paused)
-            {
-                _model.Resume();
-            }
-            else
-            {
-                _model.Pause();
-            }
-        }
 
         #endregion
     }
