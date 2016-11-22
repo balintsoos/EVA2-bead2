@@ -1,5 +1,6 @@
-﻿using System.Windows;
-using Asteroids.ViewModel;
+﻿using Asteroids.ViewModel;
+using System;
+using System.Windows;
 
 namespace Asteroids
 {
@@ -8,17 +9,37 @@ namespace Asteroids
     /// </summary>
     public partial class App : Application
     {
-        protected override void OnStartup(StartupEventArgs e)
+        private AsteroidsViewModel _viewModel;
+        private MainWindow _mainWindow;
+
+        public App()
         {
-            base.OnStartup(e);
+            Startup += new StartupEventHandler(App_Startup);
+        }
 
-            MainWindow window = new MainWindow();
+        private void App_Startup(object sender, StartupEventArgs e)
+        {
+            _viewModel = new AsteroidsViewModel();
 
-            AsteroidsViewModel viewModel = new AsteroidsViewModel();
+            _viewModel.OnGameOver += new EventHandler<String>(ViewModel_OnGameOver);
 
-            window.DataContext = viewModel;
+            _mainWindow = new MainWindow();
+            _mainWindow.DataContext = _viewModel;
 
-            window.Show();
+            _mainWindow.Closed += new EventHandler(MainWindow_Closed);
+            _mainWindow.Show();
+        }
+
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            Shutdown();
+        }
+
+        private void ViewModel_OnGameOver(object sender, String message)
+        {
+            String header = "Game Over";
+            MessageBox.Show(message, header, MessageBoxButton.OK, MessageBoxImage.Error);
+            _viewModel.StartNewGame();
         }
     }
 }

@@ -67,7 +67,7 @@ namespace Asteroids.ViewModel
 
         private void Model_FieldsChanged(object sender, EventArgs e)
         {
-            RefreshPanel();
+            // TODO
         }
 
         private void Model_TimePassed(object sender, int time)
@@ -77,22 +77,15 @@ namespace Asteroids.ViewModel
 
         private void Model_GameOver(object sender, int time)
         {
-            // string header = "Game Over";
-            // string text = "You lived for " + time.ToString() + " seconds";
-            // MessageBox.Show(text, header, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            // StartNewGame();
+            string message = "You lived for " + time.ToString() + " seconds";
+
+            if (OnGameOver != null)
+                OnGameOver(this, message);
         }
 
         #endregion
 
-        #region Private Methods
-
-        private void RefreshPanel()
-        {
-
-        }
-
-        private void StartNewGame()
+        public void StartNewGame()
         {
             _model.NewGame();
 
@@ -100,6 +93,8 @@ namespace Asteroids.ViewModel
 
             OnPropertyChanged("PauseResumeLabel");
         }
+
+        #region Private Methods
 
         private void PauseResume()
         {
@@ -141,6 +136,8 @@ namespace Asteroids.ViewModel
         #region Public Events
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public event EventHandler<String> OnGameOver;
 
         #endregion
     }
