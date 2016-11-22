@@ -1,21 +1,33 @@
 ﻿using Asteroids.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace Asteroids.ViewModel
 {
-    public class AsteroidsViewModel
+    public class AsteroidsViewModel : INotifyPropertyChanged
     {
+        public NewGameCommand NewGame { get; private set; }
+        public PauseResumeCommand PauseResumeGame { get; private set; }
+
+        public String PauseResumeLabel
+        {
+            get
+            {
+                if (_model.Paused)
+                {
+                    return "Resume";
+                }
+                else
+                {
+                    return "Pause";
+                }
+            }
+        }
+        
         #region Private fields
 
         private AsteroidsModel _model;
-
-        private int _rows;
-        private int _columns;
-        private int _fieldSize;
 
         #endregion
 
@@ -23,14 +35,13 @@ namespace Asteroids.ViewModel
 
         public AsteroidsViewModel()
         {
-            _rows = 5;
-            _columns = 5;
-            _fieldSize = 100;
-
-            _model = new AsteroidsModel(_rows, _columns);
+            _model = new AsteroidsModel(5, 5);
             _model.FieldsChanged += new EventHandler(Model_FieldsChanged);
             _model.TimePassed += new EventHandler<int>(Model_TimePassed);
             _model.GameOver += new EventHandler<int>(Model_GameOver);
+
+            NewGame = new NewGameCommand(this);
+            PauseResumeGame = new PauseResumeCommand(this);
         }
 
         #endregion
@@ -52,7 +63,7 @@ namespace Asteroids.ViewModel
             string header = "Game Over";
             string text = "You lived for " + time.ToString() + " seconds";
             // MessageBox.Show(text, header, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            InitGame();
+            StartNewGame();
         }
 
         #endregion
@@ -69,9 +80,41 @@ namespace Asteroids.ViewModel
 
         }
 
-        private void InitGame()
+        private void OnPropertyChanged(String property)
         {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
+        }
 
+        #endregion
+
+        #region Public Events
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Public Methods
+
+        public void StartNewGame()
+        {
+            _model.NewGame();
+
+            RefreshTime(0);
+        }
+
+        public void PauseResume()
+        {
+            if (_model.Paused)
+            {
+                _model.Resume();
+            }
+            else
+            {
+                _model.Pause();
+            }
         }
 
         #endregion

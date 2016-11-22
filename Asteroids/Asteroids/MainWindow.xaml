@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Asteroids"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Asteroids" Height="350" Width="525">
     <Grid>
-        
+        <Button Name="_NewGameButton" Content="New Game" Command="{Binding NewGame}" />
+        <Button Name="_PauseResumeButton" Content="{Binding PauseResumeLabel}" Command="{Binding PauseResumeGame}" />
     </Grid>
 </Window>

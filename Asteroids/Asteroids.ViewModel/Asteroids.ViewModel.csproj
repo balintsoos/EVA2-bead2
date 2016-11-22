@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsteroidsViewModel.cs" />
+    <Compile Include="NewGameCommand.cs" />
+    <Compile Include="PauseResumeCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -51,10 +53,6 @@
     <ProjectReference Include="..\Asteroids.Utils\Asteroids.Utils.csproj">
       <Project>{42100df8-ce9e-467d-8948-f1c8947f60ce}</Project>
       <Name>Asteroids.Utils</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Asteroids\Asteroids.csproj">
-      <Project>{d2edb176-1c19-4360-9725-faf248850854}</Project>
-      <Name>Asteroids</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
