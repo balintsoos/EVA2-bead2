@@ -97,6 +97,8 @@ namespace Asteroids.ViewModel
             _model.NewGame();
 
             TimerLabel = "0";
+
+            OnPropertyChanged("PauseResumeLabel");
         }
 
         private void PauseResume()
@@ -110,7 +112,7 @@ namespace Asteroids.ViewModel
                 _model.Pause();
             }
 
-            OnPropertyChanged();
+            OnPropertyChanged("PauseResumeLabel");
         }
 
         private void Turn(String direction)
