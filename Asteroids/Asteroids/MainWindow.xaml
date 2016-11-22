@@ -10,9 +10,9 @@
         <KeyBinding Key="Left" Command="{Binding TurnCommand}" CommandParameter="left" />
         <KeyBinding Key="Right" Command="{Binding TurnCommand}" CommandParameter="right" />
     </Window.InputBindings>
-    <Grid>
-        <Button Name="_NewGameButton" Content="New Game" Command="{Binding NewGameCommand}" />
-        <Button Name="_PauseResumeButton" Content="{Binding PauseResumeLabel}" Command="{Binding PauseResumeCommand}" />
-        <TextBox x:Name="_GameTime" Height="42" VerticalAlignment="Top" FontSize="28" Text="{Binding TimerLabel, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" />
-    </Grid>
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10">
+        <Button Name="_NewGameButton" Content="New Game" Command="{Binding NewGameCommand}" IsDefault="True" Margin="5" Padding="5" />
+        <Button Name="_PauseResumeButton" Content="{Binding PauseResumeLabel, UpdateSourceTrigger=PropertyChanged}" Command="{Binding PauseResumeCommand}" Margin="5" Padding="5" />
+        <TextBox x:Name="_GameTime" Text="{Binding TimerLabel, UpdateSourceTrigger=PropertyChanged}" Margin="5" Padding="5" IsEnabled="False" />
+    </StackPanel>
 </Window>
