@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using Asteroids.ViewModel;
 
 namespace Asteroids
 {
@@ -13,5 +8,17 @@ namespace Asteroids
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            MainWindow window = new MainWindow();
+
+            AsteroidsViewModel viewModel = new AsteroidsViewModel();
+
+            window.DataContext = viewModel;
+
+            window.Show();
+        }
     }
 }
