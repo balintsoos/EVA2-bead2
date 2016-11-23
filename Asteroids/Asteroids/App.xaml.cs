@@ -1,4 +1,5 @@
 ﻿using Asteroids.ViewModel;
+using Asteroids.Utils;
 using System;
 using System.Windows;
 
@@ -23,6 +24,7 @@ namespace Asteroids
 
             _viewModel.OnNewGame += new EventHandler(ViewModel_OnNewGame);
             _viewModel.OnGameOver += new EventHandler<String>(ViewModel_OnGameOver);
+            _viewModel.OnFieldsChanged += new EventHandler<FieldsChangedEventArgs>(ViewModel_OnFieldsChanged);
 
             _mainWindow = new MainWindow();
             _mainWindow.DataContext = _viewModel;
@@ -49,6 +51,11 @@ namespace Asteroids
             String header = "Game Over";
             MessageBox.Show(message, header, MessageBoxButton.OK, MessageBoxImage.Error);
             _viewModel.StartNewGame();
+        }
+
+        private void ViewModel_OnFieldsChanged(object sender, FieldsChangedEventArgs args)
+        {
+
         }
     }
 }

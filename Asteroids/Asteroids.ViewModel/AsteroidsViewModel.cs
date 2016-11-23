@@ -1,4 +1,5 @@
 ﻿using Asteroids.Model;
+using Asteroids.Utils;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -67,7 +68,7 @@ namespace Asteroids.ViewModel
 
         private void Model_FieldsChanged(object sender, EventArgs e)
         {
-            // TODO
+            OnFieldsChanged?.Invoke(this, new FieldsChangedEventArgs(_model.Player, _model.Asteroids));
         }
 
         private void Model_TimePassed(object sender, int time)
@@ -142,6 +143,7 @@ namespace Asteroids.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler OnNewGame;
         public event EventHandler<String> OnGameOver;
+        public event EventHandler<FieldsChangedEventArgs> OnFieldsChanged;
 
         #endregion
     }
