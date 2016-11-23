@@ -2,6 +2,9 @@
 using Asteroids.Utils;
 using System;
 using System.Windows;
+using System.Windows.Media.Imaging;
+using System.Windows.Controls;
+using System.Collections.Generic;
 
 namespace Asteroids
 {
@@ -59,9 +62,43 @@ namespace Asteroids
 
         private void ViewModel_OnFieldsChanged(object sender, FieldsChangedEventArgs args)
         {
-            foreach (Coordinate asteroid in args.Asteroids)
+            Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+                _mainWindow._Board.Children.Clear();
+
+                PaintPlayer(args.Player);
+                PaintAsteroids(args.Asteroids);
+            }));
+        }
+
+        private void PaintPlayer(Coordinate player)
+        {
+            BitmapImage playerImage = new BitmapImage(new Uri(@"pack://application:,,,/Resources/ship.png"));
+            Image img = new Image();
+
+            img.Source = playerImage;
+            img.Width = _fieldSize;
+            img.Height = _fieldSize;
+
+            Canvas.SetLeft(img, player.X * _fieldSize);
+            Canvas.SetTop(img, player.Y * _fieldSize);
+            _mainWindow._Board.Children.Add(img);
+        }
+
+        private void PaintAsteroids(List<Coordinate> asteroids)
+        {
+            BitmapImage asteroidImage = new BitmapImage(new Uri(@"pack://application:,,,/Resources/asteroid.png"));
+
+            foreach (Coordinate asteroid in asteroids)
             {
-                // graphics.DrawImage(Properties.Resources.asteroid, asteroid.X * _fieldSize, asteroid.Y * _fieldSize, _fieldSize, _fieldSize);
+                Image img = new Image();
+
+                img.Source = asteroidImage;
+                img.Width = _fieldSize;
+                img.Height = _fieldSize;
+
+                Canvas.SetLeft(img, asteroid.X * _fieldSize);
+                Canvas.SetTop(img, asteroid.Y * _fieldSize);
+                _mainWindow._Board.Children.Add(img);
             }
         }
     }
