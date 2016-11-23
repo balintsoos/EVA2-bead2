@@ -1,4 +1,5 @@
-﻿using Asteroids.ViewModel;
+﻿using Asteroids.Model;
+using Asteroids.ViewModel;
 using Asteroids.Utils;
 using System;
 using System.Windows;
@@ -16,6 +17,7 @@ namespace Asteroids
         private AsteroidsViewModel _viewModel;
         private MainWindow _mainWindow;
         private int _fieldSize;
+        private Board _board;
 
         public App()
         {
@@ -24,7 +26,9 @@ namespace Asteroids
 
         private void App_Startup(object sender, StartupEventArgs e)
         {
-            _viewModel = new AsteroidsViewModel();
+            _board = new Board(5, 5);
+            _fieldSize = 100;
+            _viewModel = new AsteroidsViewModel(new AsteroidsModel(_board.Width, _board.Width));
 
             _viewModel.OnNewGame += new EventHandler(ViewModel_OnNewGame);
             _viewModel.OnGameOver += new EventHandler<String>(ViewModel_OnGameOver);
@@ -35,8 +39,6 @@ namespace Asteroids
 
             _mainWindow.Closed += new EventHandler(MainWindow_Closed);
             _mainWindow.Show();
-
-            _fieldSize = 100;
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -49,6 +51,8 @@ namespace Asteroids
             Application.Current.Dispatcher.BeginInvoke(new Action(() => {
                 _mainWindow._PauseResumeButton.Visibility = Visibility.Visible;
                 _mainWindow._GameTime.Visibility = Visibility.Visible;
+                _mainWindow._Board.Width = _board.Width * _fieldSize;
+                _mainWindow._Board.Height = _board.Height * _fieldSize;
                 _mainWindow._Board.Visibility = Visibility.Visible;
             }));
         }

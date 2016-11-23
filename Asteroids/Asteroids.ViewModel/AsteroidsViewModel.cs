@@ -48,9 +48,9 @@ namespace Asteroids.ViewModel
 
         #region Constructor
 
-        public AsteroidsViewModel()
+        public AsteroidsViewModel(AsteroidsModel model)
         {
-            _model = new AsteroidsModel(5, 5);
+            _model = model;
             _model.FieldsChanged += new EventHandler(Model_FieldsChanged);
             _model.TimePassed += new EventHandler<int>(Model_TimePassed);
             _model.GameOver += new EventHandler<int>(Model_GameOver);

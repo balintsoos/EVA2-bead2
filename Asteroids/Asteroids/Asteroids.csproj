@@ -97,6 +97,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Asteroids.Model\Asteroids.Model.csproj">
+      <Project>{1644728a-da7b-4783-af33-5e8fe8d80f3d}</Project>
+      <Name>Asteroids.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Asteroids.Utils\Asteroids.Utils.csproj">
       <Project>{42100df8-ce9e-467d-8948-f1c8947f60ce}</Project>
       <Name>Asteroids.Utils</Name>
