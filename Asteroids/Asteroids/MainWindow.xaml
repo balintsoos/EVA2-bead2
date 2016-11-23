@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Asteroids"
         mc:Ignorable="d"
-        Title="Asteroids" Height="350" Width="525">
+        Title="Asteroids" MinHeight="350" MinWidth="325" Height="350" Width="325">
     <Window.InputBindings>
         <KeyBinding Key="Left" Command="{Binding TurnCommand}" CommandParameter="left" />
         <KeyBinding Key="Right" Command="{Binding TurnCommand}" CommandParameter="right" />

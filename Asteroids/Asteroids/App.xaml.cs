@@ -54,6 +54,8 @@ namespace Asteroids
                 _mainWindow._Board.Width = _board.Width * _fieldSize;
                 _mainWindow._Board.Height = _board.Height * _fieldSize;
                 _mainWindow._Board.Visibility = Visibility.Visible;
+                _mainWindow.Width = _mainWindow._Board.Width;
+                _mainWindow.Height = _mainWindow._Board.Height + 95;
             }));
         }
 
