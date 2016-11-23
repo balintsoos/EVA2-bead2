@@ -85,14 +85,18 @@ namespace Asteroids.ViewModel
 
         #endregion
 
+        #region Public Methods
+
         public void StartNewGame()
         {
             _model.NewGame();
-
             TimerLabel = "0";
 
             OnPropertyChanged("PauseResumeLabel");
+            OnNewGame?.Invoke(this, EventArgs.Empty);
         }
+
+        #endregion
 
         #region Private Methods
 
@@ -136,7 +140,7 @@ namespace Asteroids.ViewModel
         #region Public Events
 
         public event PropertyChangedEventHandler PropertyChanged;
-
+        public event EventHandler OnNewGame;
         public event EventHandler<String> OnGameOver;
 
         #endregion

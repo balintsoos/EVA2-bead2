@@ -21,6 +21,7 @@ namespace Asteroids
         {
             _viewModel = new AsteroidsViewModel();
 
+            _viewModel.OnNewGame += new EventHandler(ViewModel_OnNewGame);
             _viewModel.OnGameOver += new EventHandler<String>(ViewModel_OnGameOver);
 
             _mainWindow = new MainWindow();
@@ -33,6 +34,14 @@ namespace Asteroids
         private void MainWindow_Closed(object sender, EventArgs e)
         {
             Shutdown();
+        }
+
+        private void ViewModel_OnNewGame(object sender, EventArgs e)
+        {
+            Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+                _mainWindow._PauseResumeButton.Visibility = Visibility.Visible;
+                _mainWindow._GameTime.Visibility = Visibility.Visible;
+            }));
         }
 
         private void ViewModel_OnGameOver(object sender, String message)
