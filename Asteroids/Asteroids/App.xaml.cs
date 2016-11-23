@@ -12,6 +12,7 @@ namespace Asteroids
     {
         private AsteroidsViewModel _viewModel;
         private MainWindow _mainWindow;
+        private int _fieldSize;
 
         public App()
         {
@@ -31,6 +32,8 @@ namespace Asteroids
 
             _mainWindow.Closed += new EventHandler(MainWindow_Closed);
             _mainWindow.Show();
+
+            _fieldSize = 100;
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -43,6 +46,7 @@ namespace Asteroids
             Application.Current.Dispatcher.BeginInvoke(new Action(() => {
                 _mainWindow._PauseResumeButton.Visibility = Visibility.Visible;
                 _mainWindow._GameTime.Visibility = Visibility.Visible;
+                _mainWindow._Board.Visibility = Visibility.Visible;
             }));
         }
 
@@ -55,7 +59,10 @@ namespace Asteroids
 
         private void ViewModel_OnFieldsChanged(object sender, FieldsChangedEventArgs args)
         {
-
+            foreach (Coordinate asteroid in args.Asteroids)
+            {
+                // graphics.DrawImage(Properties.Resources.asteroid, asteroid.X * _fieldSize, asteroid.Y * _fieldSize, _fieldSize, _fieldSize);
+            }
         }
     }
 }
