@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Zh.Model;
 
 namespace Zh.ViewModel
@@ -16,6 +17,7 @@ namespace Zh.ViewModel
 
         public DelegateCommand NewGameCommand { get; private set; }
         public ObservableCollection<GameField> Fields { get; set; }
+        public int GameSize { get; set; }
 
         #endregion
 
@@ -34,7 +36,7 @@ namespace Zh.ViewModel
 
         private void StartNewGame()
         {
-
+            MessageBox.Show("New Game started", "New Game");
         }
     }
 }
