@@ -6,11 +6,5 @@ using System.Threading.Tasks;
 
 namespace Zh.Model
 {
-    public class GameModel
-    {
-        public GameModel()
-        {
-            
-        }
-    }
+    public enum FieldType { EMPTY, PLAYER }
 }
