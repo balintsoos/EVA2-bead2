@@ -8,9 +8,176 @@ namespace Zh.Model
 {
     public class GameModel
     {
-        public GameModel()
+        private int gameSize;
+        private Dictionary<Coordinate, Field> gameBoard;
+
+        public void newGame(int gameSize, Dictionary<Coordinate, Field> gameBoard)
         {
-            
+            this.gameSize = gameSize;
+            this.gameBoard = gameBoard;
         }
+
+        public int GameSize
+        {
+            get { return gameSize; }
+        }
+
+        public Boolean isFieldOnBoard(Coordinate p)
+        {
+            return gameBoard.ContainsKey(p);
+        }
+
+        public Field getField(int x, int y)
+        {
+            return gameBoard[new Coordinate(x, y)];
+        }
+
+        public List<Field> getFields()
+        {
+            if (gameBoard != null)
+            {
+                return gameBoard.Values.ToList();
+            }
+            return null;
+        }
+
+        public Dictionary<Coordinate, Field> GameBoard
+        {
+            get { return gameBoard; }
+        }
+
+        public Coordinate Selected { get; set; }
+
+        public void move(Move direction)
+        {
+            switch (direction)
+            {
+                case Move.UP:
+                    MoveUp();
+                    break;
+                case Move.DOWN:
+                    MoveDown();
+                    break;
+                case Move.LEFT:
+                    MoveLeft();
+                    break;
+                case Move.RIGHT:
+                    MoveRight();
+                    break;
+            }
+        }
+
+        public void MoveUp()
+        {
+            if (Selected == null)
+            {
+                return;
+            }
+
+            List<Field> list = gameBoard.Values.ToList();
+
+            foreach (Field field in list)
+            {
+                if (field.Y == Selected.Y)
+                {
+                    if (field.X == 0)
+                    {
+                        field.Coords = new Coordinate(GameSize, field.Y);
+                    }
+
+                    field.Coords = new Coordinate(field.X - 1, field.Y);
+                }
+            }
+
+            rebuild(list);
+
+
+        }
+
+        public void MoveDown()
+        {
+            if (Selected == null)
+            {
+                return;
+            }
+
+            List<Field> list = gameBoard.Values.ToList();
+
+            foreach (Field field in list)
+            {
+                if (field.Y == Selected.Y)
+                {
+                    if (field.X == GameSize)
+                    {
+                        field.Coords = new Coordinate(0, field.Y);
+                    }
+
+                    field.Coords = new Coordinate(field.X + 1, field.Y);
+                }
+            }
+
+            rebuild(list);
+        }
+
+        public void MoveLeft()
+        {
+            if (Selected == null)
+            {
+                return;
+            }
+
+            List<Field> list = gameBoard.Values.ToList();
+
+            foreach (Field field in list)
+            {
+                if (field.X == Selected.X)
+                {
+                    if (field.Y == 0)
+                    {
+                        field.Coords = new Coordinate(field.X, GameSize);
+                    }
+
+                    field.Coords = new Coordinate(field.X, field.Y - 1);
+                }
+            }
+
+            rebuild(list);
+        }
+
+        public void MoveRight()
+        {
+            if (Selected == null)
+            {
+                return;
+            }
+
+            List<Field> list = gameBoard.Values.ToList();
+
+            foreach (Field field in list)
+            {
+                if (field.X == Selected.X)
+                {
+                    if (field.X == GameSize)
+                    {
+                        field.Coords = new Coordinate(field.X, 0);
+                    }
+
+                    field.Coords = new Coordinate(field.X, field.Y + 1);
+                }
+            }
+
+            rebuild(list);
+        }
+
+        private void rebuild(List<Field> list)
+        {
+            gameBoard.Clear();
+
+            foreach (Field field in list)
+            {
+                gameBoard.Add(new Coordinate(field.X, field.Y), new Field(field.X, field.Y, field.Color));
+            }
+        }
+
     }
 }

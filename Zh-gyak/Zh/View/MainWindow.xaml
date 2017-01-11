@@ -6,26 +6,19 @@
         xmlns:local="clr-namespace:Zh.View"
         mc:Ignorable="d"
         Title="MainWindow" Height="300" Width="300">
-    <Window.InputBindings>
-        <!-- billentyűparancsok megfelelő paraméterrel -->
-        <KeyBinding Key="W" Command="{Binding StepCommand}" CommandParameter="Up" />
-        <KeyBinding Key="A" Command="{Binding StepCommand}" CommandParameter="Left" />
-        <KeyBinding Key="S" Command="{Binding StepCommand}" CommandParameter="Down" />
-        <KeyBinding Key="D" Command="{Binding StepCommand}" CommandParameter="Right" />
-    </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <GroupBox Margin="2" Header="New Game" Grid.Column="0" Grid.Row="0">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Size:" Margin="5" />
-                <TextBox Text="{Binding GameSize}" InputScope="" Width="80" Margin="0,5,5,10" Height="22" />
-                <Button Name="_NewGameButton" Command="{Binding NewGameCommand}" Content="Start" Width="80" Margin="10,5,5,5" />
-            </StackPanel>
-        </GroupBox>
+        <Menu Grid.Row="0">
+            <MenuItem Header="Menu">
+                <MenuItem Header="New Game" Command="{Binding NewGameCommand}" />
+                <Separator />
+                <MenuItem Header="Exit (Not working)" Command="{Binding ExitCommand}" />
+            </MenuItem>
+        </Menu>
         <ItemsControl Grid.Row="1" ItemsSource="{Binding Fields}">
             <!--az mezőket tároló vezérlő-->
             <ItemsControl.ItemsPanel>
@@ -37,7 +30,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Width="50" Height="50" Command="{Binding SelectCommand}">
+                    <Button Width="50" Height="50">
                         <!-- gomb háttérszíne -->
                         <Button.RenderTransform>
                             <ScaleTransform ScaleX="1" ScaleY="1" />
@@ -48,23 +41,11 @@
                                 <Setter Property="Margin" Value="0"/>
                                 <Style.Triggers>
                                     <!-- a szín egy adatkötés hatására fog változni -->
-                                    <DataTrigger Binding="{Binding Color}" Value="0">
+                                    <DataTrigger Binding="{Binding Type}" Value="EMPTY">
                                         <Setter Property="Background" Value="Blue" />
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding Color}" Value="1">
+                                    <DataTrigger Binding="{Binding Type}" Value="PLAYER">
                                         <Setter Property="Background" Value="Red" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Color}" Value="2">
-                                        <Setter Property="Background" Value="Yellow" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Color}" Value="3">
-                                        <Setter Property="Background" Value="Green" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Color}" Value="4">
-                                        <Setter Property="Background" Value="Orange" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Color}" Value="5">
-                                        <Setter Property="Background" Value="Brown" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

@@ -28,6 +28,7 @@ namespace Zh.Model
             get { return x; }
             set { x = value; }
         }
+
         public int Y
         {
             get { return y; }
@@ -46,6 +47,7 @@ namespace Zh.Model
             {
                 return false;
             }
+
             return (c.X == this.x) && (c.Y == this.Y);
         }
 
