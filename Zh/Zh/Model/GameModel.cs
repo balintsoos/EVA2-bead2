@@ -80,14 +80,7 @@ namespace Zh.Model
             {
                 if (field.Y == Selected.Y)
                 {
-                    if (field.X == 0)
-                    {
-                        field.Coords = new Coordinate(GameSize - 1, field.Y);
-                    }
-                    else
-                    {
-                        field.Coords = new Coordinate(field.X - 1, field.Y);
-                    }
+                    field.Coords = new Coordinate((field.X - 1) % GameSize, field.Y);
                 }
             }
 
@@ -107,14 +100,7 @@ namespace Zh.Model
             {
                 if (field.Y == Selected.Y)
                 {
-                    if (field.X == GameSize - 1)
-                    {
-                        field.Coords = new Coordinate(0, field.Y);
-                    }
-                    else
-                    {
-                        field.Coords = new Coordinate(field.X + 1, field.Y);
-                    }
+                    field.Coords = new Coordinate((field.X + 1) % GameSize, field.Y);
                 }
             }
 
@@ -134,14 +120,7 @@ namespace Zh.Model
             {
                 if (field.X == Selected.X)
                 {
-                    if (field.Y == 0)
-                    {
-                        field.Coords = new Coordinate(field.X, GameSize - 1);
-                    }
-                    else
-                    {
-                        field.Coords = new Coordinate(field.X, field.Y - 1);
-                    }
+                    field.Coords = new Coordinate(field.X, (field.Y - 1) % GameSize);
                 }
             }
 
@@ -161,14 +140,7 @@ namespace Zh.Model
             {
                 if (field.X == Selected.X)
                 {
-                    if (field.Y == GameSize - 1)
-                    {
-                        field.Coords = new Coordinate(field.X, 0);
-                    }
-                    else
-                    {
-                        field.Coords = new Coordinate(field.X, field.Y + 1);
-                    }
+                    field.Coords = new Coordinate(field.X, (field.Y + 1) % GameSize);
                 }
             }
 
