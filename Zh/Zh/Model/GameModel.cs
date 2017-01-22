@@ -67,6 +67,11 @@ namespace Zh.Model
             }
         }
 
+        private int mod(int x, int m)
+        {
+            return (x % m + m) % m;
+        }
+
         public void MoveUp()
         {
             if (Selected == null)
@@ -80,7 +85,7 @@ namespace Zh.Model
             {
                 if (field.Y == Selected.Y)
                 {
-                    field.Coords = new Coordinate((field.X - 1) % GameSize, field.Y);
+                    field.Coords = new Coordinate(mod(field.X - 1, GameSize), field.Y);
                 }
             }
 
@@ -100,7 +105,7 @@ namespace Zh.Model
             {
                 if (field.Y == Selected.Y)
                 {
-                    field.Coords = new Coordinate((field.X + 1) % GameSize, field.Y);
+                    field.Coords = new Coordinate(mod(field.X + 1, GameSize), field.Y);
                 }
             }
 
@@ -120,7 +125,7 @@ namespace Zh.Model
             {
                 if (field.X == Selected.X)
                 {
-                    field.Coords = new Coordinate(field.X, (field.Y - 1) % GameSize);
+                    field.Coords = new Coordinate(field.X, mod(field.Y - 1, GameSize));
                 }
             }
 
@@ -140,7 +145,7 @@ namespace Zh.Model
             {
                 if (field.X == Selected.X)
                 {
-                    field.Coords = new Coordinate(field.X, (field.Y + 1) % GameSize);
+                    field.Coords = new Coordinate(field.X, mod(field.Y + 1, GameSize));
                 }
             }
 
