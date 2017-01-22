@@ -41,8 +41,6 @@ namespace Zh.ViewModel
                     Y = field.Y,
                 });
             }
-
-            RefreshTable();
         }
 
         private void RefreshTable()
@@ -58,6 +56,7 @@ namespace Zh.ViewModel
             _model.newGame(GameSize, generateTable(GameSize));
 
             OnPropertyChanged("GameSize");
+
             Fields.Clear();
             foreach (Field field in _model.getFields())
             {
