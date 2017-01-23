@@ -11,6 +11,7 @@ namespace Zh.ViewModel
     public class GameViewModel : ViewModelBase
     {
         private GameModel _model;
+        private Random _random;
         public int GameSize { get; set; }
 
         public DelegateCommand NewGameCommand { get; private set; }
@@ -22,25 +23,18 @@ namespace Zh.ViewModel
         {
             _model = model;
 
-            GameSize = gameSize;
+            _random = new Random();
 
-            _model.newGame(GameSize, generateTable(GameSize));
+            GameSize = gameSize;
 
             NewGameCommand = new DelegateCommand(param => StartNewGame());
             StepCommand = new DelegateCommand(param => { StepGame(param.ToString()); });
 
             Fields = new ObservableCollection<GameField>();
 
-            foreach (Field field in _model.getFields())
-            {
-                Fields.Add(new GameField()
-                {
-                    Model = _model,
-                    Color = field.Color,
-                    X = field.X,
-                    Y = field.Y,
-                });
-            }
+
+
+            StartNewGame();
         }
 
         private void RefreshTable()
@@ -58,16 +52,19 @@ namespace Zh.ViewModel
             OnPropertyChanged("GameSize");
 
             Fields.Clear();
+
             foreach (Field field in _model.getFields())
             {
-                Fields.Add(new GameField()
+                Fields.Add(new GameField
                 {
-                    Model = _model,
                     Color = field.Color,
                     X = field.X,
                     Y = field.Y,
+                    SelectCommand = new DelegateCommand(selectedField => _model.Selected = new Coordinate((selectedField as GameField).X, (selectedField as GameField).Y))
                 });
             }
+
+            Shuffle();
         }
 
         private void StepGame(String direction)
@@ -91,6 +88,34 @@ namespace Zh.ViewModel
             }
 
             RefreshTable();
+        }
+
+        private void Shuffle()
+        {
+            for(int i = 0; i < GameSize; ++i)
+            {
+                _model.Selected = new Coordinate(_random.Next(GameSize), _random.Next(GameSize));
+
+                int direction = _random.Next(4);
+
+                switch (direction)
+                {
+                    case 0:
+                        StepGame("Up");
+                        break;
+                    case 1:
+                        StepGame("Left");
+                        break;
+                    case 2:
+                        StepGame("Down");
+                        break;
+                    case 3:
+                        StepGame("Right");
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         private Dictionary<Coordinate, Field> generateTable(int gameSize)

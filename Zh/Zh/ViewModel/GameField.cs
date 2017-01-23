@@ -11,7 +11,7 @@ namespace Zh.ViewModel
     {
         private int _color;
 
-        public DelegateCommand SelectCommand { get; private set; }
+        public DelegateCommand SelectCommand { get; set; }
 
         /// <summary>
         /// Felirat lekérdezése, vagy beállítása.
@@ -28,15 +28,6 @@ namespace Zh.ViewModel
                 }
             }
         }
-
-        public GameModel Model { get; set; }
-
-        public GameField()
-        {
-            SelectCommand = new DelegateCommand(param => { Model.Selected = new Coordinate(X, Y); });
-        }
-
-
 
         /// <summary>
         /// Vízszintes koordináta lekérdezése, vagy beállítása.

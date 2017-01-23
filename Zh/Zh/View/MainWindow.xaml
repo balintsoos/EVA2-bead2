@@ -37,7 +37,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Width="50" Height="50" Command="{Binding SelectCommand}">
+                    <Button Width="50" Height="50" Command="{Binding SelectCommand}" CommandParameter="{Binding}">
                         <!-- gomb háttérszíne -->
                         <Button.RenderTransform>
                             <ScaleTransform ScaleX="1" ScaleY="1" />
